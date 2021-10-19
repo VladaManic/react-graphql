@@ -6,8 +6,10 @@ import {
   useQuery,
   gql
 } from "@apollo/client";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Launches from './components/Launches';
+import Launch from './components/Launch';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/graphql',
@@ -17,10 +19,17 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div className="App">
-        <h1>Space X</h1>
-      </div>
-      <Launches/>
+      <Router>
+        <div className="App">
+          <h1>Space X</h1>
+        </div>
+        <Route exact path="/">
+          <Launches/>
+        </Route>
+        <Route exact path="/launch/:flight_number">
+          <Launch/>
+        </Route>
+      </Router>
     </ApolloProvider>
   );
 }
